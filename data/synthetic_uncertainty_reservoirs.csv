@@ -1,0 +1,3 @@
+reservoir_name,pressure_depletion_bar,thickness_m,reservoir_depth_m,radius_m
+Synthetic A,180.0,30.0,2300.0,1800.0
+Synthetic B,150.0,22.0,2600.0,1200.0
