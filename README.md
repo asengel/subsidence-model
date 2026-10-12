@@ -1,51 +1,16 @@
-# Subsidence Modelling
+# Reservoir subsidence
 
-Python implementation of **Geertsma–Van Opstal subsidence modelling**.
+One compact [Jupyter notebook](subsidence.ipynb) for Geertsma–Van Opstal and Tempone, Fjær & Landrø (2010) surface subsidence.
 
-All examples in this repository use **synthetic data**.
-
-![Total subsidence map](figures/total_subsidence_map.png)
-
-## Overview
-
-Pressure depletion increases effective stress in a reservoir and cause reservoir-rock compaction. That compaction is transferred through the surrounding rock mass and result in surface subsidence.
-
-The workflow implemented here is:
-
-```text
-Pressure depletion
-        ↓
-Reservoir compaction
-        ↓
-Geertsma influence function
-        ↓
-Van Opstal rigid-basement correction
-        ↓
-Spatial superposition
-        ↓
-Surface subsidence
-        ↓
-Visualization and uncertainty analysis
+```bash
+pip install -r requirements.txt
+jupyter lab subsidence.ipynb
 ```
 
-The spatial model operates on individual source cells, allowing pressure depletion, thickness, compaction coefficient, depth, and reservoir geometry to vary spatially.
+Run the notebook from the repository root. It contains all equations and calculation functions, the Figure 3-style comparison, and an optional example using `data/synthetic_reservoir.csv`. The comparison is self-contained. Inputs are assumed valid; there are no tests or input-validation routines.
 
-## Data
+The calculated Tempone and Van Opstal profiles nearly overlap (about 88 mm at the centre). The published Figure 3 appears closer to 95 mm; the notebook explicitly records this unresolved discrepancy and its source discretization. It does not claim exact reproduction of the published curve.
 
-All datasets included in this repository are synthetic and are provided only to demonstrate the workflow.
+All reservoir data are synthetic. The notebook focuses on surface displacement; Monte Carlo screening and the former package/test structure are omitted. Earlier versions remain in Git history.
 
-No proprietary reservoir, well, field, client, or employer information is included.
-
----
-
-## References
-
-- Geertsma, J. (1973). *A Basic Theory of Subsidence Due to Reservoir Compaction: The Homogeneous Case.*
-- Van Opstal, G. H. C. (1974). *The Effect of Base-Rock Rigidity on Subsidence Due to Reservoir Compaction.*
-- Fokker, P. A. & Orlic, B. (2006). Semi-analytic modelling of subsidence.
-
----
-
-## Disclaimer
-
-This repository is intended for engineering demonstration, research, and portfolio purposes. It should not be used as the sole basis for operational, regulatory, safety-critical, or infrastructure decisions.
+Reference: [Tempone et al. (2010), DOI: 10.1016/j.apm.2010.02.025](https://doi.org/10.1016/j.apm.2010.02.025).
