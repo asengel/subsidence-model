@@ -1,51 +1,20 @@
-# Subsidence Modelling
+# Reservoir subsidence
 
-Python implementation of **Geertsma–Van Opstal subsidence modelling**.
+One compact [Jupyter notebook](subsidence.ipynb) for Geertsma–Van Opstal and Tempone, Fjær & Landrø (2010) surface subsidence.
 
-All examples in this repository use **synthetic data**.
-
-![Total subsidence map](figures/total_subsidence_map.png)
-
-## Overview
-
-Pressure depletion increases effective stress in a reservoir and cause reservoir-rock compaction. That compaction is transferred through the surrounding rock mass and result in surface subsidence.
-
-The workflow implemented here is:
-
-```text
-Pressure depletion
-        ↓
-Reservoir compaction
-        ↓
-Geertsma influence function
-        ↓
-Van Opstal rigid-basement correction
-        ↓
-Spatial superposition
-        ↓
-Surface subsidence
-        ↓
-Visualization and uncertainty analysis
+```bash
+pip install -r requirements.txt
+jupyter lab subsidence.ipynb
 ```
 
-The spatial model operates on individual source cells, allowing pressure depletion, thickness, compaction coefficient, depth, and reservoir geometry to vary spatially.
+Run the notebook from the repository root. It contains all equations and calculation functions, the Figure 3-style comparison, and an optional example using `data/synthetic_reservoir.csv`. The comparison is self-contained. A coefficient-fitting section extends Van Opstal to prescribed Poisson ratios using TNO Appendix A as the methodological reference; all coefficients are calculated here rather than copied from TNO. Inputs are assumed valid; there are no tests or input-validation routines.
 
-## Data
+Interpreting the stated 800 m depth as the reservoir bottom gives a 750 m source centre and a 950 m basement (150 m beneath the bottom). The calculated centre subsidence is 95.101 mm for Tempone and 94.830 mm for Van Opstal, consistent with Figure 3. Their maximum profile difference is 0.271 mm. The notebook documents its 715-nucleus discretization; it does not claim recovery of the authors’ original cell coordinates or a point-by-point match to published numerical data.
 
-All datasets included in this repository are synthetic and are provided only to demonstrate the workflow.
+All reservoir data are synthetic. The notebook focuses on surface displacement; Monte Carlo screening and the former package/test structure are omitted. Earlier versions remain in Git history.
 
-No proprietary reservoir, well, field, client, or employer information is included.
+Reference: [Tempone et al. (2010), DOI: 10.1016/j.apm.2010.02.025](https://doi.org/10.1016/j.apm.2010.02.025).
 
----
+The fitted coefficients are cached per Poisson ratio and reused for source-cell summation. The notebook includes coefficient tables, four cylinder comparisons against Tempone, and point-source comparisons for six Poisson ratios (0.10–0.40) and four source-depth/basement-depth ratios (0.30–0.95). Maximum differences in the displayed cylinder cases are 0.20–1.71% of the Tempone peak; the point-source comparisons reach 1.91%. These are demonstrated approximation errors, not universal accuracy bounds.
 
-## References
-
-- Geertsma, J. (1973). *A Basic Theory of Subsidence Due to Reservoir Compaction: The Homogeneous Case.*
-- Van Opstal, G. H. C. (1974). *The Effect of Base-Rock Rigidity on Subsidence Due to Reservoir Compaction.*
-- Fokker, P. A. & Orlic, B. (2006). Semi-analytic modelling of subsidence.
-
----
-
-## Disclaimer
-
-This repository is intended for engineering demonstration, research, and portfolio purposes. It should not be used as the sole basis for operational, regulatory, safety-critical, or infrastructure decisions.
+Method reference: [TNO2022_R11962, Appendix A](https://www.kemprogramma.nl/documenten/2023/03/15/kem-16a-rapport-the-pysub-modeling-framework-tno2022_r11962-14032023-public). The fitting interval, weights, constraints and analytical zero-wavenumber coefficient are documented in the notebook.
