@@ -7,10 +7,14 @@ pip install -r requirements.txt
 jupyter lab subsidence.ipynb
 ```
 
-Run the notebook from the repository root. It contains all equations and calculation functions, the Figure 3-style comparison, and an optional example using `data/synthetic_reservoir.csv`. The comparison is self-contained. Inputs are assumed valid; there are no tests or input-validation routines.
+Run the notebook from the repository root. It contains all equations and calculation functions, the Figure 3-style comparison, and an optional example using `data/synthetic_reservoir.csv`. The comparison is self-contained. A coefficient-fitting section extends Van Opstal to prescribed Poisson ratios using TNO Appendix A as the methodological reference; all coefficients are calculated here rather than copied from TNO. Inputs are assumed valid; there are no tests or input-validation routines.
 
 Interpreting the stated 800 m depth as the reservoir bottom gives a 750 m source centre and a 950 m basement (150 m beneath the bottom). The calculated centre subsidence is 95.101 mm for Tempone and 94.830 mm for Van Opstal, consistent with Figure 3. Their maximum profile difference is 0.271 mm. The notebook documents its 715-nucleus discretization; it does not claim recovery of the authors’ original cell coordinates or a point-by-point match to published numerical data.
 
 All reservoir data are synthetic. The notebook focuses on surface displacement; Monte Carlo screening and the former package/test structure are omitted. Earlier versions remain in Git history.
 
 Reference: [Tempone et al. (2010), DOI: 10.1016/j.apm.2010.02.025](https://doi.org/10.1016/j.apm.2010.02.025).
+
+The fitted coefficients are cached per Poisson ratio and reused for source-cell summation. The notebook includes coefficient tables, four cylinder comparisons against Tempone, and point-source comparisons for six Poisson ratios (0.10–0.40) and four source-depth/basement-depth ratios (0.30–0.95). Maximum differences in the displayed cylinder cases are 0.20–1.71% of the Tempone peak; the point-source comparisons reach 1.91%. These are demonstrated approximation errors, not universal accuracy bounds.
+
+Method reference: [TNO2022_R11962, Appendix A](https://www.kemprogramma.nl/documenten/2023/03/15/kem-16a-rapport-the-pysub-modeling-framework-tno2022_r11962-14032023-public). The fitting interval, weights, constraints and analytical zero-wavenumber coefficient are documented in the notebook.
