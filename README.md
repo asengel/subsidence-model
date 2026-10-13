@@ -1,20 +1,31 @@
 # Reservoir subsidence
 
-One compact [Jupyter notebook](subsidence.ipynb) for Geertsma–Van Opstal and Tempone, Fjær & Landrø (2010) surface subsidence.
+A self-contained [Jupyter notebook](subsidence.ipynb) implementing and comparing Geertsma–Van Opstal (1974) and Tempone, Fjær & Landrø (2010) reservoir subsidence models.
 
 ```bash
 pip install -r requirements.txt
 jupyter lab subsidence.ipynb
 ```
 
-Run the notebook from the repository root. It contains all equations and calculation functions, the Figure 3-style comparison, and an optional example using `data/synthetic_reservoir.csv`. The comparison is self-contained. A coefficient-fitting section extends Van Opstal to prescribed Poisson ratios using TNO Appendix A as the methodological reference; all coefficients are calculated here rather than copied from TNO. Inputs are assumed valid; there are no tests or input-validation routines.
+Run the notebook from the repository root. It contains all equations and calculation functions, the comparison, and an example using `data/input.csv`. The comparison is self-contained. A coefficient-fitting section extends Van Opstal to prescribed Poisson ratios using TNO Appendix A as the methodological reference; all coefficients are calculated here rather than copied from TNO. Inputs are assumed valid; there are no tests or input-validation routines.
 
-Interpreting the stated 800 m depth as the reservoir bottom gives a 750 m source centre and a 950 m basement (150 m beneath the bottom). The calculated centre subsidence is 95.101 mm for Tempone and 94.830 mm for Van Opstal, consistent with Figure 3. Their maximum profile difference is 0.271 mm. The notebook documents its 715-nucleus discretization; it does not claim recovery of the authors’ original cell coordinates or a point-by-point match to published numerical data.
+The calculated centre subsidence is 95.101 mm for Tempone and 94.830 mm for Van Opstal. Their maximum profile difference is 0.271 mm. 
 
-All reservoir data are synthetic. The notebook focuses on surface displacement; Monte Carlo screening and the former package/test structure are omitted. Earlier versions remain in Git history.
+![Surface subsidence comparison between Tempone (2010) and Van Opstal (1974)](figures/van-opstal-tempone-cylinder-comparison.png)
 
-Reference: [Tempone et al. (2010), DOI: 10.1016/j.apm.2010.02.025](https://doi.org/10.1016/j.apm.2010.02.025).
+In the last section, the dataset assigns each source cell a location and area, reservoir depth and thickness, pressure depletion, compaction coefficient, and basement-depth factor. For each cell, the notebook estimates the compacted volume as cell area × thickness × compaction coefficient × pressure depletion. It then calculates that cell’s contribution to surface subsidence at each map location and sums the contributions from all cells to produce the total subsidence map and profile. This summation assumes linear superposition.
 
-The fitted coefficients are cached per Poisson ratio and reused for source-cell summation. The notebook includes coefficient tables, four cylinder comparisons against Tempone, and point-source comparisons for six Poisson ratios (0.10–0.40) and four source-depth/basement-depth ratios (0.30–0.95). Maximum differences in the displayed cylinder cases are 0.20–1.71% of the Tempone peak; the point-source comparisons reach 1.91%. These are demonstrated approximation errors, not universal accuracy bounds.
+# References 
 
-Method reference: [TNO2022_R11962, Appendix A](https://www.kemprogramma.nl/documenten/2023/03/15/kem-16a-rapport-the-pysub-modeling-framework-tno2022_r11962-14032023-public). The fitting interval, weights, constraints and analytical zero-wavenumber coefficient are documented in the notebook.
+Geertsma, J. (1973). *A basic theory of subsidence due to reservoir compaction:
+  the homogeneous case*. Verhandelingen KNGMG 28, 43–62.
+  
+Tempone, P., Fjær, E. & Landrø, M. (2010). *Improved solution of displacements due to
+  a compacting reservoir over a rigid basement*. Applied Mathematical Modelling 34,  3352–3362.
+
+TNO (2023). *The PySub Subsidence Model Framework: Technical Reference*,
+  TNO2022_R11962, 14 March 2023, Appendix A.1–A.2.
+
+Van Opstal, G.H.C. (1974). *The effect of base-rock rigidity on subsidence due to
+  reservoir compaction*. Proceedings of the Third Congress of the ISRM, 1102–1111.
+
